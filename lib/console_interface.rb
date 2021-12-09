@@ -12,18 +12,15 @@ class ConsoleInterface
   # Выводит в консоль текущее состояние игры, используя данные из экземпляра
   # класса Game (количество ошибок, сколько осталось попыток и т.д.)
   def state
-    puts <<~state
-      Слово: #{word_to_show}
-      #{figure}
-      Ошибки (#{@game.errors_made}): #{errors_to_show}
-      У вас осталось ошибок: #{@game.errors_allowed}
-
-    state
+    puts "Слово: #{word_to_show}".colorize(:blue)
+    puts "#{figure}".colorize(:yellow)
+    puts "Ошибки (#{@game.errors_made}): #{errors_to_show}".colorize(:cyan)
+    puts "У вас осталось ошибок: #{@game.errors_allowed}".colorize(:magenta)
 
     if @game.won?
-      puts "Поздравляем, вы выиграли!"
+      puts 'Поздравляем, вы выиграли!'.colorize(:green)
     elsif @game.lost?
-      puts "Вы проиграли, загаданное слово: #{@game.word}"
+      puts "Вы проиграли, загаданное слово: #{@game.word}".colorize(:red)
     end
   end
   
@@ -43,25 +40,24 @@ class ConsoleInterface
     result =
       @game.guessed_letters.map do |letter|
         if letter == nil
-          "__"
+          '__'
         else
           letter
         end
       end
 
-    result.join(" ")
+    result.join(' ')
   end
 
   # Получает массив ошибочных букв и склеивает их в строку вида "Х, У"
   def errors_to_show
-    @game.errors.join(", ")
+    @game.errors.join(', ')
   end
 
   # Получает букву из пользовательского ввода, приводит её к верхнему регистру
   # и возвращает её
   def get_input
-    print "Введите следующую букву: "
-    letter = gets[0].upcase
+    print 'Введите следующую букву: '
+    gets[0].upcase
   end
-
 end
