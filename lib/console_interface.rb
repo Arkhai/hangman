@@ -12,6 +12,7 @@ class ConsoleInterface
   # Выводит в консоль текущее состояние игры, используя данные из экземпляра
   # класса Game (количество ошибок, сколько осталось попыток и т.д.)
   def state
+    Gem.win_platform? ? (system "cls") : (system "clear")
     puts "Слово: #{word_to_show}".colorize(:blue)
     puts "#{figure}".colorize(:yellow)
     puts "Ошибки (#{@game.errors_made}): #{errors_to_show}".colorize(:cyan)
@@ -23,7 +24,6 @@ class ConsoleInterface
       puts "Вы проиграли, загаданное слово: #{@game.word}".colorize(:red)
     end
   end
-  
 
   # Возвращает фигуру из массива FIGURES, которая соответствует количеству
   # ошибок, сделанных пользователем на данный момент
@@ -31,9 +31,7 @@ class ConsoleInterface
     FIGURES[@game.errors_made]
   end
 
-
   # Метод, который готовит слово для вывода "на игровом табло".
-
   # Метод трансформирует массив (записывает вместо nil два подчеркивания),
   # и склеивает в строку, разделяя элементы пробелами.
   def word_to_show
